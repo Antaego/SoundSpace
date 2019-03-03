@@ -38,7 +38,7 @@ public class MPlane : MonoBehaviour
     {
        if (activated)
         {
-            transform.Translate(dz * Time.deltaTime, 0, 0);
+            transform.Translate(0, -dz * Time.deltaTime, 0);
             if (transform.localPosition.z >= z_max)
             {
                 transform.localPosition = ipos;
@@ -57,7 +57,7 @@ public class MPlane : MonoBehaviour
         z_max = endpos.localPosition.z;
         //get the distance between nodes
         step_len = beat_step.localPosition.z - transform.localPosition.z;
-        bps = bpm / 60;
+        bps = bpm / 60 * transform.parent.localScale.x;
         dz = bps * step_len;
         activated = true;
     }

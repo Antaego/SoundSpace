@@ -61,7 +61,7 @@ namespace GoogleARCore.Examples.HelloAR
         /// <summary>
         /// The rotation in degrees need to apply to model when the Andy model is placed.
         /// </summary>
-        private const float k_ModelRotation = 270.0f;
+        private const float k_ModelRotation = 90.0f;
 
         /// <summary>
         /// A list to hold all planes ARCore is tracking in the current frame. This object is used across
@@ -154,14 +154,6 @@ namespace GoogleARCore.Examples.HelloAR
                     //sequencer.transform.position = anchor.transform.position;
                     // Make Andy model a child of the anchor.
                     sequencer.transform.parent = anchor.transform;
-
-
-                    //sequencer.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
-
-                   // sequencer.SetActive(true);
-                    //sequencer.GetComponent<Sequencer>().Init();
-
-                    //sequencer.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
                 }
             }
         }
