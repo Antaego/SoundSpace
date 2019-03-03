@@ -150,8 +150,8 @@ namespace GoogleARCore.Examples.HelloAR
                     // Create an anchor to allow ARCore to track the hitpoint as understanding of the physical
                     // world evolves.
                     var anchor = hit.Trackable.CreateAnchor(hit.Pose);
-                    
 
+                    //sequencer.transform.position = anchor.transform.position;
                     // Make Andy model a child of the anchor.
                     sequencer.transform.parent = anchor.transform;
 
@@ -159,7 +159,7 @@ namespace GoogleARCore.Examples.HelloAR
                     //sequencer.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
 
                    // sequencer.SetActive(true);
-                    sequencer.GetComponent<Sequencer>().Init();
+                    //sequencer.GetComponent<Sequencer>().Init();
 
                     //sequencer.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
                 }

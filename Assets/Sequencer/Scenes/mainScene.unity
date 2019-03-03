@@ -345,7 +345,7 @@ MonoBehaviour:
   FirstPersonCamera: {fileID: 1774703017}
   DetectedPlanePrefab: {fileID: 1654175882956584, guid: 6a35c744e5010405c847fad90282d2be,
     type: 3}
-  sequencerPrefab: {fileID: 7303033612914198884, guid: d41f3afe314c2ff48952de6d61c22afc,
+  sequencerPrefab: {fileID: 8021116037894389505, guid: 2cd156018841aa64e9b80a27b520e955,
     type: 3}
   SearchingForPlaneUI: {fileID: 938403282}
 --- !u!1001 &1110308162

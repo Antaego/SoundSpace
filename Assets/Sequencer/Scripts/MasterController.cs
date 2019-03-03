@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class MasterController : MonoBehaviour
 {
     MusicNode selected = null;
+    private List<MusicNode> sel = null;
     public Recorder r;
     private bool recording = false;
     int counter = 0;
@@ -54,17 +55,21 @@ public class MasterController : MonoBehaviour
                     {
 
                         MusicNode selected_new = (MusicNode)raycastHit.collider.transform.parent.GetComponent("MusicNode");
-                        if (selected != null)
+                        if (sel != null)
                         {
-                            if (selected_new.name != selected.name)
+                            
+                            if (!sel.Contains(selected_new))
                             {
-                                selected.Deselected();
+                                //selected.Deselected();
                                 selected = selected_new;
+                                sel.Add(selected_new);
                             }
                         }
                         else
                         {
                             selected = selected_new;
+                            sel = new List<MusicNode>();
+                            sel.Add(selected_new);
                         }
                         selected.Selected();
                         print(targ);
@@ -73,11 +78,11 @@ public class MasterController : MonoBehaviour
 
                 if (raycastHit.collider.GetComponent("Recorder") != null)
                 {
-                    if (selected != null)
+                    if (sel != null)
                     {
                         recording = true;
-                        r.Selected();
                         StartRecording();
+                        r.Selected();
                         print("Recording");
                     }
 
@@ -85,10 +90,10 @@ public class MasterController : MonoBehaviour
             }
             else
             {
-                if (selected != null)
+                if (sel != null)
                 {
-                    selected.Deselected();
-                    selected = null;
+                    sel.ForEach(m => m.Deselected());
+                    sel = null;
                 }
 
             }
@@ -98,8 +103,8 @@ public class MasterController : MonoBehaviour
             if (recording == true)
             {
                 recording = false;
-                r.Deselected();
                 StopRecording();
+                r.Deselected();
                 print("stopped recording");
             }
         }
@@ -120,6 +125,7 @@ public class MasterController : MonoBehaviour
         //Start the recording, the length of 300 gives it a cap of 5 minutes
         clip = Microphone.Start("", false, 300, 44100);
         startRecordingTime = Time.time;
+
     }
 
 
@@ -129,11 +135,15 @@ public class MasterController : MonoBehaviour
         Microphone.End("");
 
         //Trim the audioclip by the length of the recording
-        AudioClip recordingNew = AudioClip.Create(clip.name, (int)((Time.time - startRecordingTime) * clip.frequency), clip.channels, clip.frequency, false);
-        float[] data = new float[(int)((Time.time - startRecordingTime) * clip.frequency)];
+        float endTime = Time.time;
+        AudioClip recordingNew = AudioClip.Create(clip.name, (int)((endTime - startRecordingTime) * clip.frequency), clip.channels, clip.frequency, false);
+        float[] data = new float[(int)((endTime - startRecordingTime) * clip.frequency)];
         clip.GetData(data, 0);
         recordingNew.SetData(data, 0);
-        selected.SetClip(recordingNew);
+
+        sel.ForEach(m => m.SetClip(recordingNew));
+
+        //selected.SetClip(recordingNew);
         //Play recording
     }
 
